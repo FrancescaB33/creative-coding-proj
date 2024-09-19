@@ -1,5 +1,5 @@
 export function vizC(p, letter, x, y, w, h) {
-  const numLines = 15; // Number of flowy lines to draw
+  const numLines = 10; // Number of flowy lines to draw
 
   // Create a pGraphics object to draw off-screen
   const pg = p.createGraphics(w, h);
@@ -12,6 +12,10 @@ export function vizC(p, letter, x, y, w, h) {
 
   // Drawing on the pGraphics object instead of the main canvas
   pg.stroke(255, 0, 255);
+
+  if (Math.random() > 0.5) {
+    pg.stroke(255, 0, 0);
+  }
   pg.strokeWeight(3);
   pg.noFill();
 

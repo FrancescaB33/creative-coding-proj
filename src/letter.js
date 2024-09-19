@@ -3,19 +3,22 @@ import { vizB } from "./viz/vizB";
 import { vizC } from "./viz/vizC";
 
 export class Letter {
-  constructor(p, letter, x, y, w, h) {
+  constructor(p, letter, x, y, w, h, randomFactor) {
     this.letter = letter;
     this.x = x;
     this.y = y;
     this.w = w;
     this.h = h;
-    this.vizType = "vizC";
+    this.vizType = randomFactor < 0.5 ? "vizB" : "vizC";
+    this.randomFactor = randomFactor;
 
     this.generateLetter(p);
   }
 
   generateLetter(p) {
-    if (this.vizType === "vizC") {
+    if (this.vizType === "vizB") {
+      this.buffer = vizB(p, this.letter, 0, 0, this.w, this.h);
+    } else {
       this.buffer = vizC(p, this.letter, 0, 0, this.w, this.h);
     }
   }

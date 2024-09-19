@@ -36,19 +36,29 @@ export class Grid {
 
     this.generateLetters(p, cellWidth, cellHeight);
 
+    // Find the longest word length
+    const longestWordLength = Math.max(
+      ...this.words.map((word) => word.length)
+    );
+
     this.words.forEach((word, j) => {
+      const currentWordLength = word.length;
+      const offset = (longestWordLength - currentWordLength) / 2; // Calculate the offset for centering
+
       for (let i = 0; i < word.length; i++) {
         const curLetter = word[i].toLowerCase();
 
-        // find the letter in the this.letters array
+        // Find the letter in the this.letters array
         const l = this.letters.find((l) => l.letter === curLetter);
+        console.log(l);
         const newLetter = new Letter(
           p,
           l.letter,
-          i * cellWidth + this.padding + cellWidth / 2,
+          (i + offset) * cellWidth + this.padding + cellWidth / 2, // Adjust x position with offset
           j * cellHeight + this.padding + cellHeight / 2,
           cellWidth,
-          cellHeight
+          cellHeight,
+          l.randomFactor
         );
 
         this.finalLetters.push(newLetter);
@@ -74,7 +84,7 @@ export class Grid {
 
     // generate a letter for each unique character
     uniqueLetters.forEach((letter) => {
-      this.letters.push(new Letter(p, letter, 0, 0, w, h));
+      this.letters.push(new Letter(p, letter, 0, 0, w, h, Math.random()));
     });
   }
 
