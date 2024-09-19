@@ -42,4 +42,12 @@ new p5((p) => {
     setState("WIDTH", window.innerHeight * RATIO);
     setState("HEIGHT", window.innerHeight);
   };
+
+  // listen to keyboard spacebar press
+  p.keyPressed = () => {
+    if (p.key === " ") {
+      setState("showLetters", !getState("showLetters"));
+      p.draw();
+    }
+  };
 });

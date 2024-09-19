@@ -3,10 +3,22 @@ import { vizB } from "./viz/vizB";
 import { vizC } from "./viz/vizC";
 import { vizD } from "./viz/vizD";
 
+import { getState } from "./state";
+
 const colors = ["#fcbf49", "#f77f00", "#d62828", "#90a955", "#6a4c93"];
 
 export class Letter {
-  constructor(p, letter, x, y, w, h, randomFactor, showLetter = true) {
+  constructor(
+    p,
+    letter,
+    x,
+    y,
+    w,
+    h,
+    randomFactor,
+    showLetter = true,
+    colorIndex
+  ) {
     this.letter = letter;
     this.x = x;
     this.y = y;
@@ -17,9 +29,11 @@ export class Letter {
     this.types = ["vizA", "vizB", "vizC", "vizD"];
     this.vizType = this.types[Math.floor(this.mappedRandomFactor)];
     this.showLetter = showLetter;
+    this.colorIndex = colorIndex;
 
+    console.log(colorIndex);
     // pick a random color from colors
-    this.color = colors[Math.floor(Math.random() * colors.length)];
+    this.color = colors[Math.floor(colorIndex * colors.length)];
 
     this.generateLetter(p);
   }
@@ -49,8 +63,12 @@ export class Letter {
     // get height of the text
     const txtHeight = p.textAscent();
 
-    if (this.showLetter) {
+    if (getState("showLetters")) {
       p.text(this.letter, this.x - txtSize / 2, this.y + txtHeight / 3);
+    } else {
+      if (this.showLetter) {
+        p.text(this.letter, this.x - txtSize / 2, this.y + txtHeight / 3);
+      }
     }
 
     // p.push();

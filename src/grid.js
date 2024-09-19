@@ -59,7 +59,8 @@ export class Grid {
           cellWidth,
           cellHeight,
           l.randomFactor,
-          j === 0 ? true : false
+          j === 0 ? true : false,
+          l.colorIndex
         );
 
         this.finalLetters.push(newLetter);
@@ -85,7 +86,9 @@ export class Grid {
 
     // generate a letter for each unique character
     uniqueLetters.forEach((letter) => {
-      this.letters.push(new Letter(p, letter, 0, 0, w, h, Math.random()));
+      this.letters.push(
+        new Letter(p, letter, 0, 0, w, h, Math.random(), true, Math.random())
+      );
     });
   }
 

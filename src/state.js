@@ -3,6 +3,7 @@ let STATE = {
   RATIO: 0,
   WIDTH: 0,
   HEIGHT: 0,
+  showLetters: false,
 };
 
 let pContext;
