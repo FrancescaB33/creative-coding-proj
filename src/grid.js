@@ -2,7 +2,7 @@ import { getState } from "./state.js";
 import { Letter } from "./letter.js";
 
 export class Grid {
-  constructor(w, h) {
+  constructor(w, h, p) {
     this.w = w;
     this.h = h;
     this.padding = 20;
@@ -18,45 +18,68 @@ export class Grid {
       "Cariad",
       "Dragoste",
     ];
+    this.p = p;
     this.lowestCharacterCount = this.getLowestCharacterCount();
     this.highestCharacterCount = this.getHighestCharacterCount();
 
     console.log(this.lowestCharacterCount, this.highestCharacterCount);
 
     this.letters = [];
+    this.finalLetters = [];
   }
 
   initGrid(p) {
-    const cols = this.highestCharacterCount; // Number of columns based on highest character count
-    const rows = this.words.length; // Number of rows based on the number of words
-    const cellWidth = (this.w - this.padding * 2) / cols; // Calculate cell width
-    const cellHeight = (this.h - this.padding * 2) / rows; // Calculate cell height
+    const cols = this.highestCharacterCount;
+    const rows = this.words.length;
+    const cellWidth = (this.w - this.padding * 2) / cols;
+    const cellHeight = (this.h - this.padding * 2) / rows;
 
-    for (let i = 0; i < cols; i++) {
-      for (let j = 0; j < rows; j++) {
-        p.stroke(0);
-        p.rect(
-          i * cellWidth + this.padding,
-          j * cellHeight + this.padding,
-          cellWidth,
-          cellHeight
-        ); // Draw each cell
+    this.generateLetters(p, cellWidth, cellHeight);
 
-        const l = new Letter(
-          this.words[j][i],
+    this.words.forEach((word, j) => {
+      for (let i = 0; i < word.length; i++) {
+        const curLetter = word[i].toLowerCase();
+
+        // find the letter in the this.letters array
+        const l = this.letters.find((l) => l.letter === curLetter);
+        const newLetter = new Letter(
+          p,
+          l.letter,
           i * cellWidth + this.padding + cellWidth / 2,
           j * cellHeight + this.padding + cellHeight / 2,
           cellWidth,
           cellHeight
         );
 
-        this.letters.push(l);
+        this.finalLetters.push(newLetter);
       }
-    }
+    });
+  }
+
+  getUniqueCharacters() {
+    let uniqueChars = new Set();
+
+    // Iterate over each word
+    this.words.forEach((word) => {
+      // Spread each word into characters and add to the Set
+      [...word.toLowerCase()].forEach((char) => uniqueChars.add(char));
+    });
+
+    // Convert the Set to an array and return it
+    return Array.from(uniqueChars);
+  }
+
+  generateLetters(p, w, h) {
+    const uniqueLetters = this.getUniqueCharacters();
+
+    // generate a letter for each unique character
+    uniqueLetters.forEach((letter) => {
+      this.letters.push(new Letter(p, letter, 0, 0, w, h));
+    });
   }
 
   drawGrid(p) {
-    this.letters.forEach((l) => l.drawLetter(p));
+    this.finalLetters.forEach((l) => l.drawLetter(p));
   }
 
   getLowestCharacterCount() {
