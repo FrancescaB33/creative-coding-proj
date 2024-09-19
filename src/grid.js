@@ -5,7 +5,7 @@ export class Grid {
   constructor(w, h, p) {
     this.w = w;
     this.h = h;
-    this.padding = 20;
+    this.padding = 50;
     this.BASE = getState("BASE");
     this.words = [
       "Love",
@@ -58,7 +58,8 @@ export class Grid {
           j * cellHeight + this.padding + cellHeight / 2,
           cellWidth,
           cellHeight,
-          l.randomFactor
+          l.randomFactor,
+          j === 0 ? true : false
         );
 
         this.finalLetters.push(newLetter);

@@ -1,7 +1,7 @@
 export function vizB(p, letter, x, y, w, h) {
   const numLines = 10; // Number of lines to draw
   const numPoints = 150; // Number of points per line to make it smooth
-  const noiseScale = 0.04; // Control scale of noise for wave effect
+  const noiseScale = p.random(0.001, 0.1); // Control scale of noise for wave effect
 
   // Create a pGraphics object to draw off-screen
   const pg = p.createGraphics(w, h);

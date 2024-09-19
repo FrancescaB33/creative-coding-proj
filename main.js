@@ -24,7 +24,7 @@ new p5((p) => {
   };
 
   p.draw = () => {
-    // p.background(255); // Black background
+    p.background(250, 250, 240); // Black background
 
     grid.drawGrid(p);
 

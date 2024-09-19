@@ -1,38 +1,47 @@
-export function vizA(p, x, y, w, h, letter) {
-  const numLines = 15; // Number of flowy lines to draw
+export function vizA(p, letter, x, y, w, h, color = [150, 100, 200]) {
+  const numBars = Math.floor(p.random(10, 20)); // Random number of bars between 10 and 20
 
-  // Create a pGraphics object to draw off-screen
   const pg = p.createGraphics(w, h);
 
-  // Convert the letter to a unique seed by using its char code
   const seed = letter.charCodeAt(0);
-
-  // Set the random seed based on the letter
   p.randomSeed(seed);
 
-  // Drawing on the pGraphics object instead of the main canvas
-  pg.stroke(255, 0, 255);
-  pg.noFill();
+  pg.noStroke();
+  pg.fill(color);
 
-  for (let i = 0; i < numLines; i++) {
-    // Starting point of the curve (random within the bounds)
-    let x1 = x + p.random(-w / 2, w / 2);
-    let y1 = y + p.random(-h / 2, h / 2);
+  const isHorizontal = p.random() > 0.5; // 50% chance to draw horizontal or vertical bars
 
-    // Control points and end point for the bezier curve (random within the bounds)
-    let x2 = x + p.random(-w / 2, w / 2);
-    let y2 = y + p.random(-h / 2, h / 2);
+  let barWidths = [];
+  let totalBarDimension = 0;
 
-    let x3 = x + p.random(-w / 2, w / 2);
-    let y3 = y + p.random(-h / 2, h / 2);
-
-    let x4 = x + p.random(-w / 2, w / 2);
-    let y4 = y + p.random(-h / 2, h / 2);
-
-    // Draw the bezier curve on the pGraphics object
-    pg.bezier(x1, y1, x2, y2, x3, y3, x4, y4);
+  // Calculate the width or height of all bars and their total dimension
+  for (let i = 0; i < numBars; i++) {
+    let barWidth = p.random(w / 20, w / 10); // Random bar width for diversity
+    barWidths.push(barWidth);
+    totalBarDimension += barWidth;
   }
 
-  // Return the pGraphics object
+  let totalOffset = 0;
+  // Center the bars by calculating the offset for the total width or height
+  let startOffset = (isHorizontal ? w : h) - totalBarDimension;
+  startOffset /= 2; // Centering offset
+
+  for (let i = 0; i < numBars; i++) {
+    let barWidth = barWidths[i];
+    let barHeight = p.random(h / 6, h / 1.25); // Random height for horizontal bars
+
+    if (isHorizontal) {
+      let barX = startOffset + totalOffset;
+      let barY = y + h / 2 - barHeight / 2; // Centering bars vertically
+      pg.rect(barX, barY, barWidth - 2, barHeight);
+    } else {
+      let barY = startOffset + totalOffset;
+      let barX = x + w / 2 - barHeight / 2; // Centering bars horizontally
+      pg.rect(barX, barY, barHeight, barWidth - 2);
+    }
+
+    totalOffset += barWidth; // Accumulate the width to position the next bar
+  }
+
   return pg;
 }
