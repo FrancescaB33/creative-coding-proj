@@ -1,5 +1,6 @@
 import { getState } from "./state.js";
 import { Letter } from "./letter.js";
+import dataset from "../public/dataset.json"; // Import the dataset.json file
 
 export class Grid {
   constructor(w, h, p) {
@@ -22,10 +23,10 @@ export class Grid {
     this.lowestCharacterCount = this.getLowestCharacterCount();
     this.highestCharacterCount = this.getHighestCharacterCount();
 
-    console.log(this.lowestCharacterCount, this.highestCharacterCount);
-
     this.letters = [];
     this.finalLetters = [];
+
+    console.log(dataset);
   }
 
   initGrid(p) {
@@ -50,7 +51,6 @@ export class Grid {
 
         // Find the letter in the this.letters array
         const l = this.letters.find((l) => l.letter === curLetter);
-        console.log(l);
         const newLetter = new Letter(
           p,
           l.letter,

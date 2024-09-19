@@ -1,4 +1,4 @@
-export function vizB(p, letter, x, y, w, h) {
+export function vizB(p, letter, x, y, w, h, color) {
   const numLines = 10; // Number of lines to draw
   const numPoints = 150; // Number of points per line to make it smooth
   const noiseScale = p.random(0.001, 0.1); // Control scale of noise for wave effect
@@ -13,7 +13,7 @@ export function vizB(p, letter, x, y, w, h) {
   p.noiseSeed(seed);
 
   // Drawing on the pGraphics object instead of the main canvas
-  pg.stroke(150, 100, 200); // Set color of the lines
+  pg.stroke(color); // Set color of the lines
   pg.strokeWeight(2); // Set thickness of the lines
   pg.noFill(); // No fill for the shapes
 

@@ -1,6 +1,9 @@
 import { vizA } from "./viz/vizA";
 import { vizB } from "./viz/vizB";
 import { vizC } from "./viz/vizC";
+import { vizD } from "./viz/vizD";
+
+const colors = ["#fcbf49", "#f77f00", "#d62828", "#90a955", "#6a4c93"];
 
 export class Letter {
   constructor(p, letter, x, y, w, h, randomFactor, showLetter = true) {
@@ -10,21 +13,26 @@ export class Letter {
     this.w = w;
     this.h = h;
     this.randomFactor = randomFactor;
-    this.mappedRandomFactor = p.map(this.randomFactor, 0, 1, 0, 3);
-    this.types = ["vizA", "vizB", "vizC"];
+    this.mappedRandomFactor = p.map(this.randomFactor, 0, 1, 0, 4);
+    this.types = ["vizA", "vizB", "vizC", "vizD"];
     this.vizType = this.types[Math.floor(this.mappedRandomFactor)];
     this.showLetter = showLetter;
+
+    // pick a random color from colors
+    this.color = colors[Math.floor(Math.random() * colors.length)];
 
     this.generateLetter(p);
   }
 
   generateLetter(p) {
     if (this.vizType === "vizB") {
-      this.buffer = vizB(p, this.letter, 0, 0, this.w, this.h);
+      this.buffer = vizB(p, this.letter, 0, 0, this.w, this.h, this.color);
     } else if (this.vizType === "vizA") {
-      this.buffer = vizA(p, this.letter, 0, 0, this.w, this.h);
+      this.buffer = vizA(p, this.letter, 0, 0, this.w, this.h, this.color);
+    } else if (this.vizType === "vizC") {
+      this.buffer = vizC(p, this.letter, 0, 0, this.w, this.h, this.color);
     } else {
-      this.buffer = vizC(p, this.letter, 0, 0, this.w, this.h);
+      this.buffer = vizD(p, this.letter, 0, 0, this.w, this.h, this.color);
     }
   }
 
