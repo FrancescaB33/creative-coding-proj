@@ -20,12 +20,15 @@ new p5((p) => {
     p.createCanvas(STATE.WIDTH, STATE.HEIGHT);
 
     grid = new Grid(STATE.WIDTH, STATE.HEIGHT);
+    grid.initGrid(p);
   };
 
   p.draw = () => {
-    p.background(255); // Black background
+    // p.background(255); // Black background
 
     grid.drawGrid(p);
+
+    p.noLoop();
   };
 
   p.windowResized = () => {
