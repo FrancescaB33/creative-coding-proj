@@ -20,9 +20,16 @@ export class Letter {
       }
     }
 
+    p.fill(0);
     p.textSize(64);
     p.stroke(0);
-    p.text(this.letter, this.x, this.y);
+    // get size of the text
+    const txtSize = p.textWidth(this.letter);
+
+    // get height of the text
+    const txtHeight = p.textAscent();
+
+    p.text(this.letter, this.x - txtSize / 2, this.y + txtHeight / 3);
 
     p.push();
     p.fill(255, 0, 0);
