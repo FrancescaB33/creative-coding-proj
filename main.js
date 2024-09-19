@@ -20,6 +20,7 @@ new p5((p) => {
     p.createCanvas(STATE.WIDTH, STATE.HEIGHT);
 
     grid = new Grid(STATE.WIDTH, STATE.HEIGHT);
+
     grid.initGrid(p);
   };
 

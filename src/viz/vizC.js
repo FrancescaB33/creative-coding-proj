@@ -39,6 +39,6 @@ export function vizC(p, letter, x, y, w, h) {
   }
 
   // Return the pGraphics object
-  console.log(pg);
+
   return pg;
 }

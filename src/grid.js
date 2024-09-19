@@ -1,6 +1,8 @@
 import { getState } from "./state.js";
 import { Letter } from "./letter.js";
-import dataset from "../public/dataset.json"; // Import the dataset.json file
+// import { setState, getState, getFullState, setPContext } from "./src/state.js";
+import { extractUniqueCharacters } from "./utils/extractUniqueCharacters.js";
+import dataset from "./dataset.json";
 
 export class Grid {
   constructor(w, h, p) {
@@ -19,6 +21,38 @@ export class Grid {
       "Cariad",
       "Dragoste",
     ];
+
+    this.countryChoice = Math.floor(Math.random() * 14);
+    this.key = Object.keys(dataset)[this.countryChoice];
+    this.country = dataset[this.key];
+
+    const allWords = [
+      "Celebration",
+      "Collaboration",
+      "Diversity",
+      "Generosity",
+      "Community",
+      "Harmony",
+      "Inclusivity",
+      "Unity",
+    ];
+
+    this.wordChoice = Math.floor(Math.random() * 8);
+    this.wordKey = allWords[this.wordChoice];
+    this.word = this.country[this.wordKey];
+
+    // Create an array with all values of this.word
+    const valWords = Object.values(this.word);
+    // Replace the words in this.words with allWords
+    this.words = [];
+    valWords.forEach((word) => {
+      this.words.push(word);
+    });
+
+    this.words = this.words.map((word) =>
+      word.replace(/\s*\(.*?\)\s*/g, "").trim()
+    );
+
     this.p = p;
     this.lowestCharacterCount = this.getLowestCharacterCount();
     this.highestCharacterCount = this.getHighestCharacterCount();
@@ -26,10 +60,11 @@ export class Grid {
     this.letters = [];
     this.finalLetters = [];
 
-    console.log(dataset);
+    const uniqueCharacters = extractUniqueCharacters(dataset);
+    console.log({ uniqueCharacters });
   }
 
-  initGrid(p) {
+  initGrid(p, wordChoice) {
     const cols = this.highestCharacterCount;
     const rows = this.words.length;
     const cellWidth = (this.w - this.padding * 2) / cols;
@@ -70,6 +105,8 @@ export class Grid {
 
   getUniqueCharacters() {
     let uniqueChars = new Set();
+
+    console.log(this.words);
 
     // Iterate over each word
     this.words.forEach((word) => {

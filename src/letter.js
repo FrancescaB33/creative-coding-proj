@@ -33,7 +33,6 @@ export class Letter {
     this.showLetter = showLetter;
     this.colorIndex = colorIndex;
 
-    console.log(colorIndex);
     // pick a random color from colors
     this.color = colors[Math.floor(colorIndex * colors.length)];
 
@@ -61,6 +60,7 @@ export class Letter {
     p.image(this.buffer, this.x - this.w / 2, this.y - this.h / 2);
 
     p.fill(0);
+    p.stroke(255);
     p.textSize(64);
     p.stroke(0);
     // get size of the text
@@ -70,9 +70,27 @@ export class Letter {
     const txtHeight = p.textAscent();
 
     if (getState("showLetters")) {
+      // Draw stroke behind the text
+      p.stroke(0); // Set stroke color (black)
+      p.strokeWeight(6); // Set stroke thickness
+      p.noFill(); // Disable fill to draw only the stroke
+      p.text(this.letter, this.x - txtSize / 2, this.y + txtHeight / 3);
+
+      // Draw the filled text on top
+      p.noStroke(); // Disable stroke
+      p.fill(250, 250, 240); // Set fill color (white, or change as needed)
       p.text(this.letter, this.x - txtSize / 2, this.y + txtHeight / 3);
     } else {
       if (this.showLetter) {
+        // Draw stroke behind the text
+        p.stroke(0); // Set stroke color (black)
+        p.strokeWeight(6); // Set stroke thickness
+        p.noFill(); // Disable fill to draw only the stroke
+        p.text(this.letter, this.x - txtSize / 2, this.y + txtHeight / 3);
+
+        // Draw the filled text on top
+        p.noStroke(); // Disable stroke
+        p.fill(250, 250, 240); // Set fill color (white, or change as needed)
         p.text(this.letter, this.x - txtSize / 2, this.y + txtHeight / 3);
       }
     }
