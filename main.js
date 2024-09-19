@@ -1,11 +1,16 @@
 import p5 from "p5";
 
-const ratio = 2160 / 3840;
+// Ratio of Frame TV
+const RATIO = 2160 / 3840;
 
-let canvasOptions = {
+// Canvas options
+const canvasOptions = {
   height: window.innerHeight,
-  width: window.innerHeight * ratio,
+  width: window.innerHeight * RATIO,
 };
+
+// Responsive sizer
+const BASE = Math.min(canvasOptions.width, canvasOptions.height) / 1000;
 
 new p5((p) => {
   p.setup = () => {
@@ -13,7 +18,7 @@ new p5((p) => {
   };
 
   p.draw = () => {
-    p.background(0); // Black background
+    p.background(255); // Black background
   };
 
   p.windowResized = () => {
