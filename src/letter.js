@@ -2,6 +2,8 @@ import { vizA } from "./viz/vizA";
 import { vizB } from "./viz/vizB";
 import { vizC } from "./viz/vizC";
 import { vizD } from "./viz/vizD";
+import { vizE } from "./viz/vizE";
+import { vizF } from "./viz/vizF";
 
 import { getState } from "./state";
 
@@ -25,8 +27,8 @@ export class Letter {
     this.w = w;
     this.h = h;
     this.randomFactor = randomFactor;
-    this.mappedRandomFactor = p.map(this.randomFactor, 0, 1, 0, 4);
-    this.types = ["vizA", "vizB", "vizC", "vizD"];
+    this.mappedRandomFactor = p.map(this.randomFactor, 0, 1, 0, 6);
+    this.types = ["vizA", "vizB", "vizC", "vizD", "vizE", "vizF"];
     this.vizType = this.types[Math.floor(this.mappedRandomFactor)];
     this.showLetter = showLetter;
     this.colorIndex = colorIndex;
@@ -45,8 +47,12 @@ export class Letter {
       this.buffer = vizA(p, this.letter, 0, 0, this.w, this.h, this.color);
     } else if (this.vizType === "vizC") {
       this.buffer = vizC(p, this.letter, 0, 0, this.w, this.h, this.color);
-    } else {
+    } else if (this.vizType === "vizD") {
       this.buffer = vizD(p, this.letter, 0, 0, this.w, this.h, this.color);
+    } else if (this.vizType === "vizE") {
+      this.buffer = vizE(p, this.letter, 0, 0, this.w, this.h, this.color);
+    } else if (this.vizType === "vizF") {
+      this.buffer = vizF(p, this.letter, 0, 0, this.w, this.h, this.color);
     }
   }
 
